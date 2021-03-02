@@ -66,7 +66,7 @@ Queried all of the temperature observations made by the stations for all months 
 * Identified the overall average temperature in June and December.
 
 <p align="center">
-  <img src="Images/JuneDecAvgTemp.png" width="1000">
+  <img src="Images/JuneDecAvgTemp.png" width="950">
 </p>
 
 * Performed an independent t-test to determine whether the difference in the temperature means, is statistically significant.

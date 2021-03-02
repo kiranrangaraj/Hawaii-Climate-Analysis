@@ -1,147 +1,157 @@
-# sqlalchemy-challenge
-SQLAlchemy Homework Assignment for Data Analytics Bootcamp - Trilogy Education, Vanderbilt University
+# Hawaii Climate Analysis
 
-# Surfs Up!
+<p align="center">
+  <img src="Images/surfs-up.png" width="600">
+</p>
 
-![surfs-up.png](Images/surfs-up.png)
+---
 
-Congratulations! You've decided to treat yourself to a long holiday vacation in Honolulu, Hawaii! To help with your trip planning, you need to do some climate analysis on the area. The following outlines what you need to do.
+## Summary ##
 
-## Step 1 - Climate Analysis and Exploration
+Hawaii is well-known for having a perfect combination of beautiful beaches and warm tropical weather year-round, making it a popular travel destination. But how exactly does weather fluctuate in terms of montly precipitation and temperature? This project performed climate analysis and data exploration of a Hawaii SQLite climate database using Python and SQLAlchemy through SQLAlchemy ORM queries, Pandas, and Matplotlib. Additionally, hypothetical vacation dates were chosen and the climate was analyzed for the timespan in order to demonstrate how the dataset could be utilized to help with trip planning.
 
-To begin, use Python and SQLAlchemy to do basic climate analysis and data exploration of your climate database. All of the following analysis should be completed using SQLAlchemy ORM queries, Pandas, and Matplotlib.
+---
 
-* Use the provided [starter notebook](climate_starter.ipynb) and [hawaii.sqlite](Resources/hawaii.sqlite) files to complete your climate analysis and data exploration.
+## Process ##
 
-* Choose a start date and end date for your trip. Make sure that your vacation range is approximately 3-15 days total.
+### Reflect Tables Into SQLAlchemy ORM
+* Used SQLAlchemy `create_engine` to connect to your sqlite database.
+* Used SQLAlchemy `automap_base()` to reflect your tables into classes and save a reference to those classes called `Station` and `Measurement`.
 
-* Use SQLAlchemy `create_engine` to connect to your sqlite database.
+### Exploratory Climate Analysis
 
-* Use SQLAlchemy `automap_base()` to reflect your tables into classes and save a reference to those classes called `Station` and `Measurement`.
+#### 1. Precipitation Analysis
+Designed a query to retrieve the last 12 months of precipitation data and plotted the results.
+* Calculated the date one year from the last date in the data set.
+* Designed a query to retrieve `date` and `prcp` values.
+* Loaded the query results into a Pandas DataFrame and set the index to the date column.
+* Sorted the DataFrame values by `date`.
+* Plotted the results using the DataFrame `.plot` method.
+* Used Pandas to print the summary statistics for the precipitation data.
 
-### Precipitation Analysis
+<p align="center">
+  <img src="Images/Describe.png" width="150">
+  <img src="Images/Precipitation.png" width="350">
+</p>
 
-* Design a query to retrieve the last 12 months of precipitation data.
+#### 2. Station Analysis
+Designed a query to calculate the total number of stations and most active stations.
+* Listed the stations and observation counts in descending order using the `func.count` function in queries..
 
-* Select only the `date` and `prcp` values.
+<p align="center">
+  <img src="Images/StationRankings.png" width="220">
+</p>
 
-* Load the query results into a Pandas DataFrame and set the index to the date column.
+* Determined the top station's minimum, average, and maximum rainfall using `func.min`, `func.avg`, and `func.max` functions. 
 
-* Sort the DataFrame values by `date`.
+<p align="center">
+  <img src="Images/TopStation.png" width="300">
+</p>
 
-* Plot the results using the DataFrame `plot` method.
+* Designed a query to retrieve the last 12 months of temperature observations (TOBS).
+  * Filtered by the station with the highest number of observations.
+  * Ploted the results as a histogram with `bins=12`.
 
-  ![precipitation](Images/precipitation.png)
+<p align="center">
+  <img src="Images/StationHistogram.png" width="340">
+</p>
 
-* Use Pandas to print the summary statistics for the precipitation data.
+### Temperature Analysis
 
-### Station Analysis
+#### 1. June vs. December Temperature Differences
 
-* Design a query to calculate the total number of stations.
+Queried all of the temperature observations made by the stations for all months of June and December to see if there is a meaningful difference in weather between summer and winter.
+* Used Pandas's `read_csv()` function to read the CSV into a DataFrame.
+* Filtered the DataFrame separately for the months of June and December.
+* Identified the overall average temperature in June and December.
 
-* Design a query to find the most active stations.
+<p align="center">
+  <img src="Images/JuneDecAvgTemp.png" width="1200">
+</p>
 
-  * List the stations and observation counts in descending order.
+* Performed an independent t-test to determine whether the difference in the temperature means, is statistically significant.
 
-  * Which station has the highest number of observations?
+<p align="center">
+  <img src="Images/TTest.png" width="700">
+</p>
 
-  * Hint: You will need to use a function such as `func.min`, `func.max`, `func.avg`, and `func.count` in your queries.
+* Analyzed the t-statistic and p-value.
+  * An independent-samples (unpaired) t-test was run since temperature observations for two different groups of cases, ie June versus December, are being compared. Though the average overall temperature difference between June and December was only 3.9 degrees Fahreinheit, the independent-samples t-test found an extremely low p-value, which strongly indicates statistical significance in the difference between the mean temperatures.
 
-* Design a query to retrieve the last 12 months of temperature observation data (TOBS).
+#### 2. Hypothetical Vacation Planning
+##### Temperature Analysis
+Vacation dates from 2015-10-14 until 2015-10-22 were chosen to be analyzed.
+* Created a function that returns the minimum, average, and maximum, temperature for the chosen range of dates, using a date format of `%Y-%m-%d`.
+* Used the function to calculate the min, max, and avg temperatures for the trip using the matching dates from the previous year.
 
-  * Filter by the station with the highest number of observations.
+<p align="center">
+  <img src="Images/VacationTemps.png" width="280">
+</p>
 
-  * Plot the results as a histogram with `bins=12`.
+* Plotted the min, avg, and max temperature as a bar chart.
+  * Used the average temperature as the bar height.
+  * Used the peak-to-peak (TMAX-TMIN) value as the y-error bar (YERR).
 
-    ![station-histogram](Images/station-histogram.png)
+<p align="center">
+  <img src="Images/VacationAvgTemperature.png" width="250">
+</p>
+    
+##### Average Daily Rainfall Analysis
+The rainfall statistics for the vacation dates was analyzed.
+* Calculated the total rainfall per weather station for the trip using the previous year's matching dates.
+* Calculated the daily normals. Normals are the averages for the min, avg, and max temperatures.
+  * Created a function to calculate the daily normals for the vacation dates, using a date string in the format `%m-%d`, pulling all historic TOBS that match the date string.
+  * Created a `for` loop to go through the list of date strings and calculate the daily normals for each date and append the results to a list.
+* Loaded the list of daily normals into a Pandas DataFrame and set the index equal to the date.
 
-- - -
+<p align="center">
+  <img src="Images/VacationTempTable.png" width="250">
+</p>
 
-## Step 2 - Climate App
+* Used Matplotlib to plot an area plot (`stacked=False`) for the daily normals.
 
-Now that you have completed your initial analysis, design a Flask API based on the queries that you have just developed.
+<p align="center">
+  <img src="Images/VacationDailyNormals.png" width="400">
+</p>
 
-* Use Flask to create your routes.
+---
+
+## Climate App ##
+A Flask API was designed based on the queries developed, using Flask `jsonify` to convert API data into a valid JSON response object. The following routes were created using Flask. 
 
 ### Routes
 
 * `/`
-
-  * Home page.
-
+  * Home page.\
   * List all routes that are available.
-
 * `/api/v1.0/precipitation`
-
   * Convert the query results to a dictionary using `date` as the key and `prcp` as the value.
-
-  * Return the JSON representation of your dictionary.
-
+  * Return the JSON representation of the dictionary.
 * `/api/v1.0/stations`
-
   * Return a JSON list of stations from the dataset.
-
 * `/api/v1.0/tobs`
-  * Query the dates and temperature observations of the most active station for the last year of data.
-  
+  * Query the dates and temperature observations of the most active station for the last year of data.  
   * Return a JSON list of temperature observations (TOBS) for the previous year.
-
 * `/api/v1.0/<start>` and `/api/v1.0/<start>/<end>`
-
-  * Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range.
-
+  * Returned a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range.
   * When given the start only, calculate `TMIN`, `TAVG`, and `TMAX` for all dates greater than and equal to the start date.
-
   * When given the start and the end date, calculate the `TMIN`, `TAVG`, and `TMAX` for dates between the start and end date inclusive.
 
-## Hints
+---
 
-* You will need to join the station and measurement tables for some of the queries.
+## Data Sources ##
+* https://github.com/kiranrangaraj/sqlalchemy-challenge/blob/master/Resources/hawaii.sqlite
+* https://github.com/kiranrangaraj/sqlalchemy-challenge/blob/master/Resources/hawaii_stations.csv
+* https://github.com/kiranrangaraj/sqlalchemy-challenge/blob/master/Resources/hawaii_measurements.csv
 
-* Use Flask `jsonify` to convert your API data into a valid JSON response object.
+---
 
-- - -
+## Technologies Used ##
+* PyCharm - Python IDE
+* Jupyter Notebook
+* Python - Pandas, SQLAlchemy, Flask, Datetime, NumPy, SciPy, Matplotlib,
+* SQLite, JSON, CSV files
 
-## Bonus: Other Recommended Analyses
-
-* The following are optional challenge queries. These are highly recommended to attempt, but not required for the homework.
-
-### Temperature Analysis I
-
-* Hawaii is reputed to enjoy mild weather all year. Is there a meaningful difference between the temperature in, for example, June and December?
-
-* You may either use SQLAlchemy or pandas's `read_csv()` to perform this portion.
-
-* Identify the average temperature in June at all stations across all available years in the dataset. Do the same for December temperature.
-
-* Use the t-test to determine whether the difference in the means, if any, is statistically significant. Will you use a paired t-test, or an unpaired t-test? Why?
-
-### Temperature Analysis II
-
-* The starter notebook contains a function called `calc_temps` that will accept a start date and end date in the format `%Y-%m-%d`. The function will return the minimum, average, and maximum temperatures for that range of dates.
-
-* Use the `calc_temps` function to calculate the min, avg, and max temperatures for your trip using the matching dates from the previous year (i.e., use "2017-01-01" if your trip start date was "2018-01-01").
-
-* Plot the min, avg, and max temperature from your previous query as a bar chart.
-
-  * Use the average temperature as the bar height.
-
-  * Use the peak-to-peak (TMAX-TMIN) value as the y error bar (YERR).
-
-    ![temperature](Images/temperature.png)
-
-### Daily Rainfall Average
-
-* Calculate the rainfall per weather station using the previous year's matching dates.
-
-* Calculate the daily normals. Normals are the averages for the min, avg, and max temperatures.
-
-* You are provided with a function called `daily_normals` that will calculate the daily normals for a specific date. This date string will be in the format `%m-%d`. Be sure to use all historic TOBS that match that date string.
-
-* Create a list of dates for your trip in the format `%m-%d`. Use the `daily_normals` function to calculate the normals for each date string and append the results to a list.
-
-* Load the list of daily normals into a Pandas DataFrame and set the index equal to the date.
-
-* Use Pandas to plot an area plot (`stacked=False`) for the daily normals.
-
-  ![daily-normals](Images/daily-normals.png)
+---
+## Author ##
+Kiran Rangaraj - LinkedIn: [@Kiran Rangaraj](https://www.linkedin.com/in/kiranrangaraj/)

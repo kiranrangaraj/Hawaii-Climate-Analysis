@@ -149,7 +149,7 @@ A Flask API was designed based on the queries developed, using Flask `jsonify` t
 ## Technologies Used ##
 * PyCharm - Python IDE
 * Jupyter Notebook
-* Python - Pandas, SQLAlchemy, Flask, Datetime, NumPy, SciPy, Matplotlib,
+* Python - Pandas, SQLAlchemy, Flask, Datetime, NumPy, SciPy, Matplotlib
 * SQLite, JSON, CSV files
 
 ---

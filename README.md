@@ -66,7 +66,7 @@ Queried all of the temperature observations made by the stations for all months 
 * Identified the overall average temperature in June and December.
 
 <p align="center">
-  <img src="Images/JuneDecAvgTemp.png" width="1200">
+  <img src="Images/JuneDecAvgTemp.png" width="1000">
 </p>
 
 * Performed an independent t-test to determine whether the difference in the temperature means, is statistically significant.
@@ -85,7 +85,7 @@ Vacation dates from 2015-10-14 until 2015-10-22 were chosen to be analyzed.
 * Used the function to calculate the min, max, and avg temperatures for the trip using the matching dates from the previous year.
 
 <p align="center">
-  <img src="Images/VacationTemps.png" width="280">
+  <img src="Images/VacationTemps.png" width="260">
 </p>
 
 * Plotted the min, avg, and max temperature as a bar chart.

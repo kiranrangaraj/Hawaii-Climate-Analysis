@@ -140,9 +140,9 @@ A Flask API was designed based on the queries developed, using Flask `jsonify` t
 ---
 
 ## Data Sources ##
-* https://github.com/kiranrangaraj/sqlalchemy-challenge/blob/master/Resources/hawaii.sqlite
-* https://github.com/kiranrangaraj/sqlalchemy-challenge/blob/master/Resources/hawaii_stations.csv
-* https://github.com/kiranrangaraj/sqlalchemy-challenge/blob/master/Resources/hawaii_measurements.csv
+* [Hawaii SQLite File](https://github.com/kiranrangaraj/sqlalchemy-challenge/blob/master/Resources/hawaii.sqlite)
+* [Station Data](https://github.com/kiranrangaraj/sqlalchemy-challenge/blob/master/Resources/hawaii_stations.csv)
+* [Measurement Data](https://github.com/kiranrangaraj/sqlalchemy-challenge/blob/master/Resources/hawaii_measurements.csv)
 
 ---
 

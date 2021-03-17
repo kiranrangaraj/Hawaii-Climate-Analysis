@@ -15,8 +15,8 @@ Hawaii is well-known for having a perfect combination of beautiful beaches and w
 ## Process ##
 
 ### Reflect Tables Into SQLAlchemy ORM
-* Used SQLAlchemy `create_engine` to connect to your sqlite database.
-* Used SQLAlchemy `automap_base()` to reflect your tables into classes and save a reference to those classes called `Station` and `Measurement`.
+* Used SQLAlchemy `create_engine` to connect to the sqlite database.
+* Used SQLAlchemy `automap_base()` to reflect the tables into classes and save a reference to those classes called `Station` and `Measurement`.
 
 ### Exploratory Climate Analysis
 
